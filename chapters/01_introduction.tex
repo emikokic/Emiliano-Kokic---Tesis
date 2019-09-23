@@ -1,0 +1,52 @@
+\chapter{Introducción y motivación}
+
+\section{Introducción}
+
+El \textbf{Aprendizaje Automático} (del inglés, \textit{Machine Learning}) es una rama de la inteligencia artificial que ha adoptado diferentes definiciones a lo largo de la historia. En particular, Tom M. Mitchell proporcionó una definición formal de los algoritmos estudiados en el campo del aprendizaje automático: ``Se dice que un programa de computadora aprende de la experiencia E con respecto a alguna clase de tareas \textit{T} y rendimiento \textit{P} si su desempeño en las tareas \textit{T}, medido por \textit{P}, mejora con experiencia \textit{E}.'' \cite{Mitchell:1997:ML:541177}.
+
+El aprendizaje automático tiene una amplia gama de aplicaciones. Un problema típico que se puede abordar es la predicción de precios de inmuebles \footnote{\url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques}}. A partir del uso de distintas características de inmuebles tales como sus metros cuadrados, cantidad de habitaciones, antigüedad, etc., y los precios asociados se genera un modelo, el cual a partir de nuevos datos de entrada (``características'' o ``atributos'' de un inmueble) proporciona como salida una estimación del precio del mismo.
+
+% https://www.kaggle.com/erick5/predicting-house-prices-with-machine-learning
+Los tipos de algoritmos de aprendizaje automático difieren de acuerdo a su enfoque, el tipo de datos que ingresan, o el que generan, y el tipo de tarea o problema que pretenden resolver.
+
+Una de las tareas más comunes es el \textbf{aprendizaje supervisado}, el cual produce una función que establece una correspondencia entre los datos de entrada y los datos de salida (conocidos como ``etiquetas''). Dentro del aprendizaje supervisado nos encontramos con problemas de regresión (como el anterior ejemplo de predicción de precios de inmuebles) que tratan de etiquetar a los datos en un rango numérico (i.e. la etiqueta es continua), o 
+con problemas de clasificación que trata de etiquetar a los datos en un conjunto finito de etiquetas discretas (o clases). Un ejemplo de clasificación es el reconocimiento facial de Facebook \footnote{\url{https://www.facebook.com/facialrecognitionapp/}} que utiliza para el auto-etiquetado de imágenes. La tarea concreta que el algoritmo debe realizar es, a partir de una imagen, detectar los rostros de personas que se encuentran en la misma y asociar a cada uno de ellos con el nombre de la persona correspondiente.
+
+El \textbf{aprendizaje no supervisado} es otra tarea común en aprendizaje automático, donde todo el proceso de modelado se lleva a cabo sobre un conjunto de ejemplos formado tan sólo por datos que no tienen ninguna información sobre valor o categoría asociada (i.e. no tienen ``etiquetas''). El objetivo de una tarea de aprendizaje no supervisado generalmente está en el descubrimiento de patrones o señales que puedan explicar los datos. Un problema interesante que el aprendizaje no supervisado puede atacar es el modelado de temas en noticias, donde el objetivo es poder agrupar palabras o incluso oraciones que pertenezcan a una misma categoría. Este es un ejemplo de lo que en aprendizaje no supervisado se conoce como \textit{clustering} (a veces conocido en la literatura del español como ``agrupamiento'') donde la dificultad muchas veces se encuentra en saber elegir la cantidad de agrupaciones (\textit{clusters}) para posteriormente hacer un análisis de las mismas.
+
+Finalmente, existe un híbrido de los métodos nombrados anteriormente llamado \textbf{aprendizaje semi-supervisado}. El análisis del habla es un ejemplo clásico del valor que pueden aportar este tipo de modelos\footnote{\url{https://medium.com/@jrodthoughts/understanding-semi-supervised-learning-a6437c070c87}}. Abordar esta tarea en particular, con un modelo netamente supervisado, requeriría de muchos recursos humanos que establezca manualmente cuáles son las salidas que debe tener el modelo para ciertos datos de entrada (proceso que se conoce como etiquetado). Esto se debe a que etiquetar audio no es trivial y es, precisamente, donde un modelo de aprendizaje semi-supervisado puede ser de gran ayuda al requerir pocos datos anotados y muchos no anotados. En este trabajo de tesis se estudia en detalle un modelo de aprendizaje semi-supervisado.
+
+\section{Motivación}
+
+El \textbf{procesamiento de lenguaje natural}, abreviado PLN o NLP (del inglés \textit{Natural Language Processing}), es un campo de las ciencias de la computación, la inteligencia artificial y la lingüística que estudia las interacciones con computadores mediante lenguaje humano. Se ocupa de la formulación e investigación de mecanismos eficaces computacionalmente para la comunicación entre personas y máquinas por medio de lenguajes naturales (e.g. español, inglés, etc). PLN es en sí mismo una de las tareas más complejas que estudia la inteligencia artificial, conociéndose como un problema AI-completo. PLN está, a su vez, dividido en diversas subáreas que buscan resolver distintos problemas de índole más específico, algunos estando más cerca de ser considerados ``resueltos''.
+
+La extracción de información es una de las tareas de PLN que todavía requiere trabajo. Es además, una tarea fundamental en el análisis de texto libre para poder estructurar los datos que pueden obtenerse del texto de manera automática y poder así democratizar mejor el acceso a dicha información. 
+
+Una de las tareas más importantes que se engloban dentro del área que de extracción de información es el \textbf{reconocimiento de entidades nombradas} \footnote{\url{https://en.wikipedia.org/wiki/Named-entity_recognition}}. Esta tarea busca ubicar y clasificar ciertas entidades de un texto no estructurado en categorías predefinidas, como  nombres de personas y organizaciones, ubicaciones, expresiones temporales, cantidades, valores monetarios, entre otras. Supongamos que tenemos la siguiente oración:
+
+\vspace{2.5mm}
+
+Jim bought 300 shares of Acme Corp. in 2006.
+
+\vspace{2.5mm}
+
+Potenciales entidades a reconocer serían las siguientes:
+
+\vspace{2.5mm}
+
+[Jim]$_{Person}$ bought 300 shares of [Acme Corp.]$_{Organization}$ in [2006]$_{Time}$
+
+\vspace{5mm}
+
+Como tantas otras áreas de trabajo en procesamiento de lenguaje natural, existen buenos recursos para realizar dicha tarea de manera automática en inglés. Sin embargo, muchas veces dependiendo del dominio y/o el idioma, la calidad de estos datos puede disminuir considerablemente. Es entonces que entra en escena las ventajas de trabajar con métodos semi-supervisados que aprovechen la enorme cantidad de datos no anotados que circulan libremente por Internet. El problema con los métodos semi-supervisados es que a veces se hace difícil evaluarlos y compararlos directamente sobre tareas que los aprovechen, puesto que dichas tareas no tienen punto de comparación. Se hace necesario entonces saber si dichos métodos son útiles en tareas ya establecidas.
+
+El objetivo de esta tesis es la exploración de un método semi-supervisado conocido como ``redes neuronales convolucionales en escalera'' \cite{DBLP:journals/corr/RasmusVHBR15}. Este método es utilizado originalmente para procesamiento de imágenes, en esta tesis se adaptó a la tarea de reconocimiento de entidades nombradas. Como punto de comparación en dicha tarea, el trabajo se basa en el corpus WiNER \cite{WiNER-Ghaddar-Langlais}.
+
+\section{Estructura de la tesis}
+
+En el Capítulo \ref{chapter:chapter2} comenzamos analizando el trabajo de \cite{WiNER-Ghaddar-Langlais} sobre el corpus WiNER, generado a partir de la Wikipedia y seleccionado para nuestra investigación. Posteriormente se describe la problemática de representación de palabras de acuerdo al contexto en el que ocurren y estrategias que buscan resolver dicho problema a partir del trabajo de \cite{iacobacci-etal-2016-embeddings}. Finalmente hacemos una mención detallada de las redes neuronales en escalera propuestas en el trabajo de \cite{DBLP:journals/corr/RasmusVHBR15}, describiendo su arquitectura y particularidades. 
+
+En el Capítulo \ref{chapter:chapter3} se realiza un análisis del corpus WiNER mencionando como fue procesado en base a distintas decisiones. Se introducen los distintos tipos de instancias de entrenamiento utilizadas en los modelos junto con una descripción de las métricas de evaluación seleccionadas. Por último, se detallan las arquitecturas de los modelos utilizados.
+
+En el Capítulo \ref{chapter:chapter4} se identifican los distintos experimentos realizados junto con sus resultados e interpretaciones. 
+En el Capítulo \ref{chapter:chapter5} se proporcionan las conclusiones de esta tesis junto con el trabajo futuro.

@@ -1,0 +1,190 @@
+%Plantilla basada en "Template for Masters / Doctoral Thesis" (plantilla disponible en writeLaTex) que subió LaTeXTemplates.com
+
+\documentclass[12pt]{book}
+\usepackage[paperwidth=17cm, paperheight=22.5cm, bottom=2.5cm, right=2.5cm]{geometry}
+\usepackage{fixltx2e}
+\usepackage{amssymb,amsmath,amsthm} %paquete para símbolo matemáticos
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc} %Paquete para escribir acentos y otros símbolos directamente
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{chicago}
+\usepackage[nottoc]{tocbibind}
+\usepackage[hyphens]{url}
+\usepackage[pdftex,
+            pdfauthor={Emiliano Kokic},
+            pdftitle={Reconocimiento semi-supervisado de entidades nombradas mediante redes convolucionales en escalera},
+            pdfsubject={Licenciatura en Ciencias de la Computación}]{hyperref}
+
+\usepackage[colorinlistoftodos]{todonotes}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	COMANDOS PERSONALIZADOS
+%----------------------------------------------------------------------------------------
+
+%SI TU TESIS TIENE TEOREMAS Y DEMOSTRACIONES, PUEDES DESCOMENTAR Y USAR LOS SIGUIENTES COMANDOS
+
+%\renewcommand{\proofname}{Demostración}
+%\providecommand{\norm}[1]{\lVert#1\rVert} %Provee el comando para producir una norma.
+%\providecommand{\innp}[1]{\langle#1\rangle} 
+%\newcommand{\seno}{\mathrm{sen}}
+%\newcommand{\diff}{\mathrm{d}}
+
+%\newtheorem{teo}{Teorema}[section] 
+%\newtheorem{cor}[teo]{Corolario}
+%\newtheorem{lem}[teo]{Lema}
+
+%\theoremstyle{definition}
+%\newtheorem{dfn}[teo]{Definición}
+
+%\theoremstyle{remark}
+%\newtheorem{obs}[teo]{Observación}
+
+%\allowdisplaybreaks
+
+
+%----------------------------------------------------------------------------------------
+%	PORTADA
+%----------------------------------------------------------------------------------------
+
+\title{Reconocimiento semi-supervisado de entidades nombradas mediante redes convolucionales en escalera}
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\Large{Facultad de Matemática, Astronomía, Física y Computación}}\\[1em]
+\textsc{\large{Universidad Nacional de Córdoba}}\\[0.5em]
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=.3\linewidth]{images/unc.jpg}
+\end{center}
+\end{figure}
+\vspace{-0.1em}
+
+\LARGE{\textbf{Reconocimiento semi-supervisado de entidades nombradas mediante redes convolucionales en escalera}}\\[0.5em]
+
+\textsc{\normalsize{Tesis para obtener el título de}}\\
+
+\textsc{\large{Licenciado en Ciencias de la Computación}}\\
+
+\textsc{\normalsize{Autor:} \Large{Emiliano Kokic}}\\
+
+\textsc{\normalsize{Director:} \large{Cristian Cardellino}}
+
+\end{center}
+
+\vspace*{\fill}
+\textsc{Córdoba, Argentina \hspace*{\fill} 2019}
+
+\end{titlepage}
+
+
+%----------------------------------------------------------------------------------------
+%	DEDICATORIA
+%----------------------------------------------------------------------------------------
+
+% \pagestyle{empty}
+% \frontmatter
+
+% \chapter*{}
+% \begin{flushright}
+% \textit{DEDICATORIA}
+% \end{flushright}
+
+
+%----------------------------------------------------------------------------------------
+%	AGRADECIMIENTOS
+%----------------------------------------------------------------------------------------
+
+% \chapter*{Agradecimientos}
+% %\markboth{AGRADECIMIENTOS23}{AGRADECIMIENTOS} % encabezado 
+
+% ¡Muchas gracias a todos!
+
+
+%----------------------------------------------------------------------------------------
+%	PREFACIO
+%----------------------------------------------------------------------------------------
+
+\chapter*{Resumen}
+
+\pagestyle{plain}
+\markboth{PREFACIO23}{PREFACIO} % encabezado 
+
+El presente trabajo de tesis consiste en la exploración de un método de aprendizaje automático semi-supervisado llamado Redes Convolucionales en Escalera. La problemática que se decide abordar para la evaluación de dicho modelo es el Reconocimiento de Entidades Nombradas, una tarea muy relevante dentro del área de Procesamiento del Lenguaje Natural. Para realizar el estudio fue indispensable contar con WiNER, un corpus anotado de Wikipedia de gran calidad y fácil acceso. A su vez se estudian alternativas de representación de las palabras de acuerdo a su contexto. Se utiliza el bien conocido modelo Word2Vec para la generación de \textit{embeddings} de palabras junto con la aplicación de estrategias que los combinan. En particular, resulta que el uso de capas convolucionales es una gran herramienta para la extracción de atributos del contexto. Se implementaron distintas arquitecturas de modelos, cada una de ellas con su versión supervisada (a modo de baseline) y semi-supervisada (al agregar las redes en escalera). Cada arquitectura tiene distintos tipos de instancias de entrenamiento, en algunos casos utilizando el etiquetado de palabras así como también el etiquetado de secuencias. Finalmente, luego de definir las métricas de evaluación se realizaron los experimentos pertinentes encontrando el modelo de Redes Convolucionales en Amplitud en Escalera como el más prometedor. Si bien los resultados obtenidos no son del estado del arte en cuanto a la tarea de reconocimiento de entidades nombradas, se visualiza que los modelos semi-supervisados de redes neuronales en escalera generalizan mejor y su performance no disminuye en gran medida al de los supervisados gracias al uso complementario de datos no anotados.
+
+\vspace{10mm}
+
+The present work consists in the exploration of a semi-supervised machine learning method called Convolutional Ladder Networks. A very relevant task within the Natural Language Processing area is the Named-entity recognition, this is the problem that is decided to deal for the model evaluation. In order to carry out this study, it was essential to have WiNER, an annotated corpus of Wikipedia of great quality and easy access. At the same time, alternative strategies for the word representations according to their context are studied. The well-known Word2Vec model is used to generate word embeddings along with the application of strategies that combine them. In particular, it turns out that the use of convolutional layers is a great tool for context features extraction. Different model architectures were implemented, each of them with their supervised version (as a baseline) and the semi-supervised one (when adding ladder networks). Each architecture has different types of training instances, in some cases using word tagging as well as sequence tagging. Finally, once the experiments were executed, we found the Wide Convolutional Ladder Networks model as the most promising. Although the results obtained are not from the state of the art in terms of the task of recognizing named entities, it is found that semi-supervised models of ladder neural networks generalize better and their performance does not decrease greatly to that of supervised ones thanks to the complementary use of unlabeled data.
+
+%----------------------------------------------------------------------------------------
+%	TABLA DE CONTENIDOS
+%---------------------------------------------------------------------------------------
+
+\tableofcontents
+
+
+%----------------------------------------------------------------------------------------
+%	TESIS
+%----------------------------------------------------------------------------------------
+\mainmatter %empieza la numeración de las páginas
+\pagestyle{headings}
+
+\include{chapters/01_introduction}
+
+%\chapter{Análisis del problema}
+%\include{chapters/problem_analysis}
+
+\include{chapters/02_related_work}
+%     - Ghaddar y Langlais (2017)  -> WiNER: A Wikipedia Annotated Corpus for Named Entity Recognition  -> http://www.aclweb.org/anthology/I17-1042
+
+%     - Zeng M. et al. (2017) -> Semi-Supervised Convolutional Neural Networks for Human Activity Recognition -> https://arxiv.org/pdf/1801.07827.pdf
+
+%     - Iacobacci I. et al. (2016) -> Embeddings for Word Sense Disambiguation: An Evaluation Study -> http://www.aclweb.org/anthology/P16-1085
+%     - Rasmus A. et al. (2015) -> Semi-Supervised Learning with Ladder Networks -> https://arxiv.org/abs/1507.02672
+
+\include{chapters/03_environment}
+
+% \section{Análisis y pre-procesamiento del corpus}
+% \section{Implementación de la red convolucional en escalera}
+
+\include{chapters/04_experiments}
+
+\include{chapters/05_conclusions}
+
+\thispagestyle{empty}
+
+
+%----------------------------------------------------------------------------------------
+%	APÉNDICES
+%----------------------------------------------------------------------------------------
+
+% \addtocontents{toc}{\vspace{2em}} % Agrega espacios en la toc
+
+% \appendix % Los siguientes capítulos son apéndices
+
+%  Incluye los apéndices en el folder de apéndices
+
+% \include{Apendices/Ap}
+\thispagestyle{empty}
+%\include{Apendices/AppendixB}
+%\include{Apendices/AppendixC}
+
+\addtocontents{toc}{\vspace{2em}} % Agrega espacio en la toc
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAFÍA
+%----------------------------------------------------------------------------------------
+\backmatter
+\nocite{*}
+\bibliographystyle{apalike}
+\bibliography{bibliografia.bib} 
+%Aquí ponen el nombre del archivo .bib
+
+\end{document}
